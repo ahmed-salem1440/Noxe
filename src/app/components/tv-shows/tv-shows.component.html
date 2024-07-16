@@ -1,0 +1,27 @@
+<div *ngIf="isLoading" class="min-vh-100 w-100 d-flex align-items-center justify-content-center">
+    <div class="loading-bar">
+        Loading
+    </div>
+</div>
+<div *ngIf="!isLoading">
+<div class="row py-2">
+    <input placeholder="Search by TV Show name..." [(ngModel)]="searchTerm" type="text" class="mx-auto my-5 w-75 form-control">
+    <div class="col-md-4 d-flex align-items-center">
+        <div>
+            <div class="custom-border w-25 mb-3"></div>
+            <h2 class="">Trending <br> TV <br> Right Now</h2>
+            <p class="text-muted">Most Watched TV by Week</p>
+            <div class="custom-border w-100 mt-3"></div>
+        </div>
+    </div>
+    <div *ngFor="let TVS of trendingTV|search:searchTerm" class="col-md-2 scale text-center">
+        <a [routerLink]="['/details','tv',TVS.id]">
+            <div class="my-2 position-relative">
+                <img [src]="'https://image.tmdb.org/t/p/w500'+TVS.poster_path" class="w-100 rounded" alt="">
+                <h3 class="h5 my-3">{{TVS.name}}</h3>
+                <div class="vote p-1 rounded position-absolute top-0 end-0 m-1">{{TVS.vote_average.toFixed(1)}}</div>
+            </div>
+        </a>
+    </div>
+</div>
+</div>

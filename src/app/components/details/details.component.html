@@ -1,0 +1,58 @@
+<div *ngIf="isLoading" class="min-vh-100 w-100 d-flex align-items-center justify-content-center">
+    <div class="loading-bar">
+        Loading
+    </div>
+</div>
+<div *ngIf="!isLoading">
+<div class="row mt-5">
+    <div class="col-md-3">
+        <img *ngIf="itemDetails.profile_path" [src]="'https://image.tmdb.org/t/p/w500'+itemDetails.profile_path" class="w-100 rounded" alt="">
+        <img *ngIf="itemDetails.poster_path" [src]="'https://image.tmdb.org/t/p/w500'+itemDetails.poster_path" class="w-100 rounded" alt="">
+    </div>
+    <div class="col-md-6 mt-0 mx-3 d-flex align-items-center">
+        <div>
+            <h2>{{itemDetails.title}}{{itemDetails.name}}</h2>
+            <p class="text-muted py-2">{{itemDetails.overview}}{{itemDetails.biography}}</p>
+            <div *ngIf="itemDetails.vote_average">Vote Average: {{itemDetails.vote_average.toFixed(1)}}</div>
+            <div *ngIf="itemDetails.vote_count">Vote count: {{itemDetails.vote_count}}</div>
+            <div *ngIf="itemDetails.budget">Budget: {{itemDetails.budget}}</div>
+            <div *ngIf="itemDetails.revenue">Revenue: {{itemDetails.revenue}}</div>
+        </div>
+    </div>
+</div>
+<div *ngIf="currentMedia =='movie'" class="row">
+    <h4 *ngIf="similars.length>0" class="mt-5 mb-4 text-center">Similar Movies</h4>
+    <owl-carousel-o [options]="customOptions">
+    
+        <ng-container  *ngFor="let movie of similars">
+          <ng-template carouselSlide>
+            <a (click)="getDetails('movie',movie.id)" class="text-center" [routerLink]="['/details','movie',movie.id]">
+                <img [src]="'https://image.tmdb.org/t/p/w500'+movie.poster_path" class="w-100 custom-height rounded" alt="">
+                <h6 class="my-3">{{movie.title}}</h6>
+                <div class="vote p-1 rounded position-absolute top-0 end-0 m-1">{{movie.vote_average.toFixed(1)}}</div>
+            </a>
+          </ng-template>
+        </ng-container>
+    
+      </owl-carousel-o>
+
+</div>
+<div *ngIf="currentMedia =='tv'" class="row">
+    <h4 *ngIf="similars.length>0" class="mt-5 mb-4 text-center">Similar TV Shows</h4>
+    <owl-carousel-o [options]="customOptions">
+    
+        <ng-container  *ngFor="let tvS of similars">
+          <ng-template carouselSlide>
+            <a (click)="getDetails('tv',tvS.id)" class="text-center" [routerLink]="['/details','tv',tvS.id]">
+                <img [src]="'https://image.tmdb.org/t/p/w500'+tvS.poster_path" class="w-100 custom-height rounded" alt="">
+                <h6  class="my-3">{{tvS.name}}</h6>
+                <div class="vote p-1 rounded position-absolute top-0 end-0 m-1">{{tvS.vote_average.toFixed(1)}}</div>
+            </a>
+          </ng-template>
+        </ng-container>
+    
+      </owl-carousel-o>
+
+</div>
+</div>
+

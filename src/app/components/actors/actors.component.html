@@ -1,0 +1,26 @@
+<div *ngIf="isLoading" class="min-vh-100 w-100 d-flex align-items-center justify-content-center">
+    <div class="loading-bar">
+        Loading
+    </div>
+</div>
+<div *ngIf="!isLoading">
+<div class="row py-2">
+    <input placeholder="Search by Actor name..." [(ngModel)]="searchTerm" type="text" class="mx-auto my-5 w-75 form-control">
+    <div class="col-md-4 d-flex align-items-center">
+        <div>
+            <div class="custom-border w-25 mb-3"></div>
+            <h2 class="">Trending <br> People <br> Right Now</h2>
+            <p class="text-muted">Most Watched People by Week</p>
+            <div class="custom-border w-100 mt-3"></div>
+        </div>
+    </div>
+    <div *ngFor="let actor of trendingPeople|search:searchTerm" class="col-md-2 scale text-center">
+        <a [routerLink]="['/details','person',actor.id]">
+            <div class="my-2 position-relative">
+                <img [src]="'https://image.tmdb.org/t/p/w500'+actor.profile_path" class="w-100 rounded" alt="">
+                <h3 class="h5 my-3">{{actor.name}}</h3>
+            </div>
+        </a>
+    </div>
+</div>
+</div>

@@ -1,0 +1,29 @@
+<div class="w-75 mx-auto py-4">
+    <h3 class="my-3">Login</h3>
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin(loginForm)">
+        
+        <label for="email">Email</label>
+        <input type="email" id="email" formControlName="email" class=" form-control my-2">
+        <div *ngIf="loginForm.get('email')?.errors && loginForm.get('email')?.touched" class="text-center p-1 alert alert-danger">
+            <p class="m-0" *ngIf="loginForm.get('email')?.getError('email')">Invalid email</p>
+            <p class="m-0" *ngIf="loginForm.get('email')?.getError('required')">Email is required</p>
+        </div>
+        <label for="password">Password</label>
+        <input type="password"id="password" formControlName="password" class=" form-control my-2">
+        <div *ngIf="loginForm.get('password')?.errors && loginForm.get('password')?.touched" class="alert p-1 text-center alert-danger">
+            <p class="m-0" *ngIf="loginForm.get('password')?.getError('required')">password is required</p>
+            <p class="m-0" *ngIf="loginForm.get('password')?.getError('pattern')">password must start with capital letter and between 5 and 10 character</p>
+        </div>
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-info my-3 mx-auto text-white fw-bold">
+            <span *ngIf="!isLoading">Login</span>
+            <span *ngIf="isLoading"><i class="fa-solid fa-spinner fa-spin"></i></span>
+        </button>
+        <div *ngIf="isError" class="alert alert-danger p-1 text-center">
+            <p class="m-0">{{errorMsg}}</p>
+        </div>
+
+    </form>
+    <a class="text-white d-block" routerLink="/forgotPassword">Forgot password?</a>
+    <span>not a member? <a class="text-white" routerLink="/register">Register</a></span>
+
+</div>
